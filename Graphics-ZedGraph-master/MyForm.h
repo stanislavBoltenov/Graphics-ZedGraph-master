@@ -88,6 +88,8 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column7;
 private: System::Windows::Forms::Label^ label11;
 private: System::Windows::Forms::TextBox^ textBox11;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
+	private: ZedGraph::ZedGraphControl^ zedGraphControl2;
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker2;
 	protected:
 	private: System::ComponentModel::IContainer^ components;
 
@@ -154,6 +156,8 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
+			this->zedGraphControl2 = (gcnew ZedGraph::ZedGraphControl());
+			this->backgroundWorker2 = (gcnew System::ComponentModel::BackgroundWorker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->BeginInit();
@@ -176,7 +180,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 				this->i, this->x_i,
 					this->u_i, this->v_i, this->Column1
 			});
-			this->dataGridView1->Location = System::Drawing::Point(589, 30);
+			this->dataGridView1->Location = System::Drawing::Point(973, 30);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersVisible = false;
 			this->dataGridView1->RowHeadersWidth = 51;
@@ -264,7 +268,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			// 
 			// zedGraphControl1
 			// 
-			this->zedGraphControl1->Location = System::Drawing::Point(38, 30);
+			this->zedGraphControl1->Location = System::Drawing::Point(22, 30);
 			this->zedGraphControl1->Margin = System::Windows::Forms::Padding(4);
 			this->zedGraphControl1->Name = L"zedGraphControl1";
 			this->zedGraphControl1->ScrollGrace = 0;
@@ -274,8 +278,11 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			this->zedGraphControl1->ScrollMinX = 0;
 			this->zedGraphControl1->ScrollMinY = 0;
 			this->zedGraphControl1->ScrollMinY2 = 0;
-			this->zedGraphControl1->Size = System::Drawing::Size(544, 327);
+			this->zedGraphControl1->Size = System::Drawing::Size(431, 287);
 			this->zedGraphControl1->TabIndex = 0;
+			this->zedGraphControl1->GraphPane->Title->Text = "";
+			this->zedGraphControl1->GraphPane->XAxis->Title->Text = "";
+			this->zedGraphControl1->GraphPane->YAxis->Title->Text = "";
 			this->zedGraphControl1->Load += gcnew System::EventHandler(this, &MyForm::zedGraphControl1_Load);
 			// 
 			// radioButton1
@@ -360,11 +367,11 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 				this->dataGridViewTextBoxColumn1,
 					this->dataGridViewTextBoxColumn2, this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5
 			});
-			this->dataGridView2->Location = System::Drawing::Point(588, 30);
+			this->dataGridView2->Location = System::Drawing::Point(973, 30);
 			this->dataGridView2->Name = L"dataGridView2";
 			this->dataGridView2->RowHeadersVisible = false;
 			this->dataGridView2->RowHeadersWidth = 51;
-			this->dataGridView2->Size = System::Drawing::Size(395, 327);
+			this->dataGridView2->Size = System::Drawing::Size(405, 327);
 			this->dataGridView2->TabIndex = 43;
 			this->dataGridView2->Visible = false;
 			this->dataGridView2->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView2_CellContentClick);
@@ -431,7 +438,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 					this->dataGridViewTextBoxColumn11, this->dataGridViewTextBoxColumn12, this->dataGridViewTextBoxColumn13, this->Column8, this->Column9,
 					this->dataGridViewTextBoxColumn18
 			});
-			this->dataGridView3->Location = System::Drawing::Point(589, 30);
+			this->dataGridView3->Location = System::Drawing::Point(973, 30);
 			this->dataGridView3->Name = L"dataGridView3";
 			this->dataGridView3->RowHeadersVisible = false;
 			this->dataGridView3->RowHeadersWidth = 51;
@@ -521,9 +528,9 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			this->listBox1->FormattingEnabled = true;
 			this->listBox1->ItemHeight = 16;
 			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"Справочная информация" });
-			this->listBox1->Location = System::Drawing::Point(1022, 30);
+			this->listBox1->Location = System::Drawing::Point(973, 363);
 			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(409, 308);
+			this->listBox1->Size = System::Drawing::Size(409, 180);
 			this->listBox1->TabIndex = 45;
 			// 
 			// label11
@@ -547,11 +554,32 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			this->textBox11->Text = L"10000";
 			this->textBox11->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox11_TextChanged);
 			// 
+			// zedGraphControl2
+			// 
+			this->zedGraphControl2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->zedGraphControl2->Location = System::Drawing::Point(477, 30);
+			this->zedGraphControl2->Margin = System::Windows::Forms::Padding(4);
+			this->zedGraphControl2->Name = L"zedGraphControl2";
+			this->zedGraphControl2->ScrollGrace = 0;
+			this->zedGraphControl2->ScrollMaxX = 0;
+			this->zedGraphControl2->ScrollMaxY = 0;
+			this->zedGraphControl2->ScrollMaxY2 = 0;
+			this->zedGraphControl2->ScrollMinX = 0;
+			this->zedGraphControl2->ScrollMinY = 0;
+			this->zedGraphControl2->ScrollMinY2 = 0;
+			this->zedGraphControl2->Size = System::Drawing::Size(439, 287);
+			this->zedGraphControl2->TabIndex = 46;
+			this->zedGraphControl2->GraphPane->Title->Text = "";
+			this->zedGraphControl2->GraphPane->XAxis->Title->Text = "";
+			this->zedGraphControl2->GraphPane->YAxis->Title->Text = "";
+			this->zedGraphControl2->Load += gcnew System::EventHandler(this, &MyForm::zedGraphControl2_Load);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1443, 544);
+			this->Controls->Add(this->zedGraphControl2);
 			this->Controls->Add(this->listBox1);
 			this->Controls->Add(this->label16);
 			this->Controls->Add(this->label14);
@@ -590,13 +618,16 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 	private: System::Void zedGraphControl1_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 
+
 		   bool can_draw = false;
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (can_draw) {
 
 			GraphPane^ panel = zedGraphControl1->GraphPane;
+			GraphPane^ panel2 = zedGraphControl2->GraphPane;
 			panel->CurveList->Clear();
+			panel2->CurveList->Clear();
 			PointPairList^ f1_list = gcnew ZedGraph::PointPairList();
 			PointPairList^ f2_list = gcnew ZedGraph::PointPairList();
 			PointPairList^ f3_list = gcnew ZedGraph::PointPairList();
@@ -628,10 +659,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 					dataGridView1->Rows->Add();
 
 					dataGridView1->Rows[i]->Cells[0]->Value = i;
-					dataGridView1->Rows[i]->Cells[1]->Value = double(i) / progonka_data.size();
-					dataGridView1->Rows[i]->Cells[2]->Value = progonka_data[i];
-					dataGridView1->Rows[i]->Cells[3]->Value = true_solution[i];
-					dataGridView1->Rows[i]->Cells[4]->Value = progonka_data[i] - true_solution[i];
+					dataGridView1->Rows[i]->Cells[1]->Value = (double(i) / progonka_data.size()).ToString("E3");
+					dataGridView1->Rows[i]->Cells[2]->Value = (progonka_data[i]).ToString("E3");
+					dataGridView1->Rows[i]->Cells[3]->Value = (true_solution[i]).ToString("E3");
+					dataGridView1->Rows[i]->Cells[4]->Value = (progonka_data[i] - true_solution[i]).ToString("E3");
 				}
 			}
 
@@ -653,10 +684,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 					dataGridView2->Rows->Add();
 
 					dataGridView2->Rows[i]->Cells[0]->Value = i;
-					dataGridView2->Rows[i]->Cells[1]->Value = double(i) / progonka_data.size();
-					dataGridView2->Rows[i]->Cells[2]->Value = progonka_data[i];
-					dataGridView2->Rows[i]->Cells[3]->Value = progonka_data2[2*i];
-					dataGridView2->Rows[i]->Cells[4]->Value = progonka_data[i] - progonka_data2[2 * i];
+					dataGridView2->Rows[i]->Cells[1]->Value = (double(i) / progonka_data.size()).ToString("E3");
+					dataGridView2->Rows[i]->Cells[2]->Value = (progonka_data[i]).ToString("E3");
+					dataGridView2->Rows[i]->Cells[3]->Value = (progonka_data2[2*i]).ToString("E3");
+					dataGridView2->Rows[i]->Cells[4]->Value = (progonka_data[i] - progonka_data2[2 * i]).ToString("E3");
 
 					
 				}
@@ -666,28 +697,28 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			if (num_rhs == 2)
 			{
 				LineItem CurvE3 = panel->AddCurve("численное решение с половинным шагом", f2_list, Color::Blue, SymbolType::Circle);
-				LineItem CurvE2 = panel->AddCurve("разность численных решений в общих узлах", f3_list, Color::Green, SymbolType::Circle);
-				listBox1->Items->Add("для решения задачи использована равномерная");
+				LineItem CurvE2 = panel2->AddCurve("разность численных решений в общих узлах", f3_list, Color::Green, SymbolType::Circle);
+				listBox1->Items->Add("Для решения задачи использована равномерная");
 				listBox1->Items->Add("сетка c числом разбиений n = " + (count_it - 1).ToString() + ";");
-				listBox1->Items->Add("задача должна быть решена с заданной");
-				listBox1->Items->Add("точностью e = 0.5*10 ^ (–6); задача решена");
-				listBox1->Items->Add("с точночтью e2 = " + (mx).ToString() + ";");
-				listBox1->Items->Add("максимальня разность численных решений");
+				listBox1->Items->Add("Задача должна быть решена с заданной");
+				listBox1->Items->Add("точностью e = 5E–007; задача решена");
+				listBox1->Items->Add("с точночтью e2 = " + (mx).ToString("E3") + ";");
+				listBox1->Items->Add("Максимальня разность численных решений");
 				listBox1->Items->Add("в общих узлах сетки наблюдается в точке");
-				listBox1->Items->Add("x = " + (xe).ToString());
+				listBox1->Items->Add("x = " + (xe).ToString("E3"));
 			}
 			if (num_rhs == 1)
 			{
 				LineItem CurvE3 = panel->AddCurve("аналитическое решение", f2_list, Color::Blue, SymbolType::Circle);
-				LineItem CurvE2 = panel->AddCurve("разность аналитического и численного решения", f3_list, Color::Green, SymbolType::Circle);
-				listBox1->Items->Add("для решения задачи использована равномерная");
+				LineItem CurvE2 = panel2->AddCurve("разность аналитического и численного решения", f3_list, Color::Green, SymbolType::Circle);
+				listBox1->Items->Add("Для решения задачи использована равномерная");
 				listBox1->Items->Add("сетка c числом разбиений n = " + (count_it - 1).ToString() + ";");
-				listBox1->Items->Add("задача должна быть решена с погрешностью");
-				listBox1->Items->Add("не более e = 0.5*10 ^ (–6); задача решена");
-				listBox1->Items->Add("с погрешностью e1 = " + (mx).ToString() + ";");
-				listBox1->Items->Add("максимальное отклонение аналитического");
+				listBox1->Items->Add("Задача должна быть решена с погрешностью");
+				listBox1->Items->Add("не более e = 5E–007; задача решена");
+				listBox1->Items->Add("с погрешностью e1 = " + (mx).ToString("E3") + ";");
+				listBox1->Items->Add("Максимальное отклонение аналитического");
 				listBox1->Items->Add("и численного решений наблюдается в точке");
-				listBox1->Items->Add("x = " + (xe).ToString());
+				listBox1->Items->Add("x = " + (xe).ToString("E3"));
 			}
 			if (panel->ZoomStack != nullptr)
 			{
@@ -698,10 +729,22 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			panel->YAxis->Scale->MinAuto = true;
 			panel->YAxis->Scale->MaxAuto = true;
 
+			if (panel2->ZoomStack != nullptr)
+			{
+				panel2->ZoomStack->Clear();
+			}
+			panel2->XAxis->Title->Text = "X ось";
+			panel2->YAxis->Title->Text = "V ось";
+			panel2->YAxis->Scale->MinAuto = true;
+			panel2->YAxis->Scale->MaxAuto = true;
+
 
 			zedGraphControl1->AxisChange();
 			zedGraphControl1->Refresh();
-			zedGraphControl1->Invalidate();			
+			zedGraphControl1->Invalidate();
+			zedGraphControl2->AxisChange();
+			zedGraphControl2->Refresh();
+			zedGraphControl2->Invalidate();
 		}
 	}
 
@@ -720,6 +763,20 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 		zedGraphControl1->AxisChange();
 		zedGraphControl1->Refresh();
 		zedGraphControl1->Invalidate();
+
+		GraphPane^ panel2 = zedGraphControl2->GraphPane;
+
+		if (panel2->ZoomStack != nullptr)
+		{
+			panel2->ZoomStack->Clear();
+		}
+		panel2->YAxis->Scale->MinAuto = true;
+		panel2->YAxis->Scale->MaxAuto = true;
+
+
+		zedGraphControl2->AxisChange();
+		zedGraphControl2->Refresh();
+		zedGraphControl2->Invalidate();
 
 	}
 
@@ -746,6 +803,10 @@ int num_rhs = 1;
 		panel->CurveList->Clear();
 		zedGraphControl1->AxisChange();
 		zedGraphControl1->Invalidate();
+		GraphPane^ panel2 = zedGraphControl2->GraphPane;
+		panel2->CurveList->Clear();
+		zedGraphControl2->AxisChange();
+		zedGraphControl2->Invalidate();
 
 		can_draw = false;
 		dataGridView1->Visible = false;
@@ -800,6 +861,8 @@ private: System::Void label11_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void textBox11_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void label13_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void zedGraphControl2_Load(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
