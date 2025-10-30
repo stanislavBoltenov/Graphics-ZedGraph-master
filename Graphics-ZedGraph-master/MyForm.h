@@ -1,10 +1,8 @@
 ﻿#pragma once
 #include <math.h>
-#include "solve_ivp.h"
 #include "progonka.h"
 
 namespace Graph {
-	//std::pair <std::vector < std::vector< point > >, std::vector <std::vector <int>>> all_data;
 	std::vector<double> progonka_data, true_solution, progonka_data2;
 
 	using namespace System;
@@ -43,120 +41,18 @@ namespace Graph {
 
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Button^ button2;
-
-
-
-
-
-
 	private: ZedGraph::ZedGraphControl^ zedGraphControl1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::RadioButton^ radioButton1;
 	private: System::Windows::Forms::RadioButton^ radioButton2;
-
 	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
 	private: System::Windows::Forms::Label^ label13;
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Label^ label14;
-
 	private: System::Windows::Forms::Label^ label16;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::DataGridView^ dataGridView2;
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::DataGridView^ dataGridView3;
-
-
-
-
-
-
-
-
-
-
-
-
 private: System::Windows::Forms::ListBox^ listBox1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn2;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
@@ -192,77 +88,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column7;
 private: System::Windows::Forms::Label^ label11;
 private: System::Windows::Forms::TextBox^ textBox11;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	protected:
 	private: System::ComponentModel::IContainer^ components;
 
@@ -775,33 +600,11 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 			PointPairList^ f1_list = gcnew ZedGraph::PointPairList();
 			PointPairList^ f2_list = gcnew ZedGraph::PointPairList();
 			PointPairList^ f3_list = gcnew ZedGraph::PointPairList();
-
-			//double xmin = Convert::ToDouble(textBox7->Text); // 0
-			//double xmax = Convert::ToDouble(textBox8->Text); // 1
-
-			//double h = Convert::ToDouble(textBox3->Text); // 1 / n
-
-
-			//double xmin_limit = xmin - 0.1; // skip
-			//double xmax_limit = xmax + 0.1;
-
 			dataGridView1->Visible = false;
 			dataGridView2->Visible = false;
 			dataGridView3->Visible = false;
-			int countC1, countC2; // skip
-			countC1 = countC2 = 0;
-
-			double h_max, h_min; // skip
-			h_max = 0;
-			h_min = 10000000000;
-			double x_min_h, x_max_h;
-			x_min_h = x_max_h = 0;
-			double max_glob_error = 0;
-			double x_max_glob = 0;
-			double max_olp = 0;
-
+			
 			int i = 0;
-//			int count_it = all_data.first[0].size();
 			double mx = -1., xe = -1.;
 			int count_it = progonka_data.size();
 			if (num_rhs == 1) {
@@ -886,28 +689,12 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 				listBox1->Items->Add("и численного решений наблюдается в точке");
 				listBox1->Items->Add("x = " + (xe).ToString());
 			}
-
-			
-			//listBox1->Items->Add("Кол-во шагов = " + (count_it - 1).ToString());
-			//listBox1->Items->Add("x_граничное - x_n = " + (xmax - all_data.first[0][count_it - 1].x).ToString("E4"));
-			//listBox1->Items->Add("Макс. локальная погрешность = " + abs(max_olp).ToString("E3"));
-			//if (checkBox1->Checked) {
-			//	listBox1->Items->Add("Макс. шаг = " + h_max.ToString("E3") + " в т. x = " + x_max_h.ToString("E3"));
-			//	listBox1->Items->Add("Мин. шаг = " + h_min.ToString("E3") + " в т. x = " + x_min_h.ToString("E3"));
-			//	listBox1->Items->Add("Кол-во удвоений шага = " + countC2.ToString());
-			//	listBox1->Items->Add("Кол-во делений шага на 2 = " + countC1.ToString());
-			//}
-			//if (num_rhs == 1) {
-			//	listBox1->Items->Add("Макс. абс. погрешность = " + abs(max_glob_error).ToString("E3") + " в т. x = " + x_max_glob.ToString("E3"));
-			//}
 			if (panel->ZoomStack != nullptr)
 			{
 				panel->ZoomStack->Clear();
 			}
 			panel->XAxis->Title->Text = "X ось";
 			panel->YAxis->Title->Text = "V ось";
-			//panel->XAxis->Scale->Min = xmin_limit;
-			//panel->XAxis->Scale->Max = xmax_limit;
 			panel->YAxis->Scale->MinAuto = true;
 			panel->YAxis->Scale->MaxAuto = true;
 
@@ -922,16 +709,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ u_i;
 
 		GraphPane^ panel = zedGraphControl1->GraphPane;
 
-		//double xmin = Convert::ToDouble(textBox7->Text);
-		//double xmax = Convert::ToDouble(textBox8->Text);
-
 		if (panel->ZoomStack != nullptr)
 		{
 			panel->ZoomStack->Clear();
 		}
-
-		//panel->XAxis->Scale->Min = xmin;
-		//panel->XAxis->Scale->Max = xmax;
 		panel->YAxis->Scale->MinAuto = true;
 		panel->YAxis->Scale->MaxAuto = true;
 
