@@ -68,7 +68,7 @@ double test_f2(double xi)
 
 vector<double> calc_ai(double& a, double& b, long long& n, double& psi, double(*k1)(double), double(*k2)(double))
 {
-    double xi = a;//x0
+    double xi = a; // x0
     double h = (b - a) / n;
     vector<double> ai(n, 0.);
     double t = 2. / sqrt(3.);
@@ -77,25 +77,16 @@ vector<double> calc_ai(double& a, double& b, long long& n, double& psi, double(*
         xi += h;
         if (psi > xi || abs(psi - xi) < 1e-14)
         {
-            //ai[i] = h / (h / 2. * (k1((2 * xi - h) / 2. - h / t) + k1((2 * xi - h) / 2. + h / t)));
             ai[i] = 5. / (1. / k1(xi - h) + 3. / k1(2 * xi - h) + 1. / k1(xi));
-            //ai[i] = k1(xi - 0.5 * h);
-            //ai[i] = 2. * k1(xi - h) * k1(xi) / (k1(xi - h) + k1(xi));
         }
         else if (psi > xi - h && psi < xi)
         {
-            //ai[i] = h / ((psi - xi + h) / 2. * (k1((xi - h + psi) / 2. - (psi - xi + h) / t) + k1((xi - h + psi) / 2. + (psi - xi + h) / t)) +
-            //      (-psi + xi + h) / 2. * (k2((xi + h + psi) / 2. - (-psi + xi + h) / t) + k2((xi + h + psi) / 2. + (-psi - xi + h) / t)));
             ai[i] = (5. * h) / ((psi - xi + h) * (1. / k1(xi - h) + 3. / k1(xi - h + psi) + 1. / k1(psi))
                 + (xi - psi) * (1. / k2(psi) + 3. / k2(xi + psi) + 1. / k2(xi)));
-            //ai[i] = 1. / ((1. / h) * (((psi - (xi - h)) / k1(((xi - h) + psi) / 2.)) + (xi - psi) / k1((xi + psi) / 2.)));
         }
-        else//psi <= xi
+        else // psi <= xi
         {
-            //ai[i] = h / (h / 2. * (k2((2 * xi - h) / 2. - h / t) + k2((2 * xi - h) / 2. + h / t)));
             ai[i] = 5. / (1. / k2(xi - h) + 3. / k2(2 * xi - h) + 1. / k2(xi));
-            //ai[i] = k2(xi - 0.5 * h);
-            //ai[i] = 2. * k2(xi - h) * k2(xi) / (k2(xi - h) + k2(xi));
         }
     }
     return ai;
@@ -103,7 +94,7 @@ vector<double> calc_ai(double& a, double& b, long long& n, double& psi, double(*
 
 vector<double> calc_di(double& a, double& b, long long& n, double& psi, double(*q1)(double), double(*q2)(double))
 {
-    double xi = a;//x0
+    double xi = a; // x0
     double h = (b - a) / n;
     vector<double> di(n - 1, 0.);
     for (int i = 0; i < n - 1; ++i)
@@ -111,22 +102,16 @@ vector<double> calc_di(double& a, double& b, long long& n, double& psi, double(*
         xi += h;
         if (psi > (xi + 0.5 * h) || abs(psi - xi - 0.5 * h) < 1e-14)
         {
-            //di[i] = (1. / h) * (h/2.)
             di[i] = (q1(xi - 0.5 * h) + q1(xi + 0.5 * h) + 3. * q1(2. * xi)) / 5.;
-            //di[i] = q1(xi);
-            //di[i] = (q1(xi - 0.5 * h) + q1(xi + 0.5 * h)) / 2.;
         }
         else if (psi > (xi - 0.5 * h) && psi < (xi + 0.5 * h))
         {
             di[i] = ((psi - xi + 0.5 * h) * (q1(xi - 0.5 * h) + 3. * q1(xi - 0.5 * h + psi) + q1(psi))
                 + (xi + 0.5 * h - psi) * (q2(xi + 0.5 * h) + 3. * q2(xi + 0.5 * h + psi) + q2(psi))) / (5. * h);
-            //di[i] = (1. / h) * (q1((xi - 0.5 * h + psi) / 2.) * (psi - xi + 0.5 * h) + q2((xi + 0.5 * h + psi) / 2.) * (xi + 0.5 * h - psi));
         }
-        else//psi <= xi-0.5
+        else // psi <= xi-0.5
         {
             di[i] = (q2(xi - 0.5 * h) + q2(xi + 0.5 * h) + 3. * q2(2. * xi)) / 5.;
-            //di[i] = q2(xi);
-            //di[i] = (q2(xi - 0.5 * h) + q2(xi + 0.5 * h)) / 2.;
         }
     }
     return di;
@@ -143,20 +128,15 @@ vector<double> calc_fi(double& a, double& b, long long& n, double& psi, double(*
         if (psi > (xi + 0.5 * h) || abs(psi - xi - 0.5 * h) < 1e-14)
         {
             fi[i] = (f1(xi - 0.5 * h) + f1(xi + 0.5 * h) + 3. * f1(2. * xi)) / 5.;
-            //fi[i] = f1(xi);
-            //fi[i] = (f1(xi - 0.5 * h) + f1(xi + 0.5 * h)) / 2.;
         }
         else if (psi > (xi - 0.5 * h) && psi < (xi + 0.5 * h))
         {
             fi[i] = ((psi - xi + 0.5 * h) * (f1(xi - 0.5 * h) + 3. * f1(xi - 0.5 * h + psi) + f1(psi))
                 + (xi + 0.5 * h - psi) * (f2(xi + 0.5 * h) + 3. * f2(xi + 0.5 * h + psi) + f2(psi))) / (5. * h);
-            //fi[i] = (1. / h) * (f1((xi - 0.5 * h + psi) / 2.) * (psi - xi + 0.5 * h) + f2((xi + 0.5 * h + psi) / 2.) * (xi + 0.5 * h - psi));
         }
-        else//psi <= xi-0.5
+        else // psi <= xi-0.5
         {
             fi[i] = (f2(xi - 0.5 * h) + f2(xi + 0.5 * h) + 3. * f2(2. * xi)) / 5.;
-            //fi[i] = f2(xi);
-            //fi[i] = (f2(xi - 0.5 * h) + f2(xi + 0.5 * h)) / 2.;
         }
     }
     return fi;
@@ -282,7 +262,7 @@ vector<double> calc_main_task(long long n)
     vector<double> UD = calc_upper_diagonal(ai, h, n);
     vector<double> rhs = calc_column_b(mu1, mu2, fi, n), v(n + 1, 0.0);
 
-    //проверка условий приминимости прогонки, для тестирования
+    // проверка условий приминимости прогонки, для тестирования
     for (int i = 0; i < n - 1; ++i)
     {
         if (abs(D[i]) < abs(LD[i]) + abs(UD[i]))
@@ -299,7 +279,6 @@ vector<double> calc_main_task(long long n)
         }
     }
 
-    //cout << SolveTridiagonalSLAE(LD, D, UD, rhs, v) << endl;
     SolveTridiagonalSLAE(LD, D, UD, rhs, v);
     check(LD, D, UD, rhs, v);
     return v;
@@ -397,56 +376,6 @@ long long find_optimal_n_test(double target_error = 0.5e-6)
             break;
         }
         n += 1000;
-        /*if (n < 100)
-        {
-            n += 10;
-        }
-        else if (n < 1000)
-        {
-            n += 100;
-        }
-        else if (n < 10000)
-        {
-            n += 1000;
-        }
-        else
-        {
-            n += 10000;
-        }*/
     }
     return n;
 }
-
-//int main()
-//{
-//    const double eps = 0.5e-6;
-//    long long n = 100;
-//    vector<double> v = calc_main_task(n);
-//    vector<double> v2 = calc_main_task(2 * n);
-//    double mx = -1.;
-//    for (int i = 0; i < v.size(); ++i)
-//    {
-//        //cout << abs(v[i] - v2[2 * i]) << " ";
-//        if (abs(v[i] - v2[2 * i]) > mx)
-//        {
-//            mx = abs(v[i] - v2[2 * i]);
-//        }
-//    }
-//    cout << "final error:   " << scientific << mx << endl;
-//    if (mx <= eps)
-//    {
-//        cout << "good" << endl;
-//    }
-//    else
-//    {
-//        cout << "bad" << endl;
-//    }
-//    double max_error_sol, max_error_x;
-//    int max_error_index;
-//    //cout << find_optimal_n_test() << endl;
-//    compare_test_solutions(n, max_error_sol, max_error_index, max_error_x);
-//    cout << "compare analytical and numerical sol:   " << max_error_sol << endl;
-//    cout << max_error_x << endl; // x при котором возникает максимальная ошибка (всегда в районе точки разрыва)
-//
-//    return 0;
-//}
